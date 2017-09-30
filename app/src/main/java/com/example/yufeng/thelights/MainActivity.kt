@@ -1,5 +1,6 @@
 package com.example.yufeng.thelights
 
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
@@ -8,10 +9,11 @@ import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.example.matrixlayout.BaseMatrixView
 import com.example.matrixlayout.Matrix
+import com.yvelabs.chronometer2.Chronometer
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.sp
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.concurrent.timerTask
 
 class MainActivity : AppCompatActivity() {
 
@@ -86,6 +88,12 @@ class MainActivity : AppCompatActivity() {
             }
             matrixLayout.refresh()
         }
+
+//        chronometer.setTypeFace(Chronometer.getTypeface_SQUID_SMALL_CAPS(this))
+//        chronometer.setTextSize(sp(14).toFloat())
+//        chronometer.setTextColor(Color.WHITE)
+        chronometer.start()
+
     }
 
     private fun playViewAnim(v: View) {

@@ -37,8 +37,8 @@ dependencies {
     implementation 'com.github.MagicMashRoom:SuperShadow:v1.0.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation project(':matrixlayout')
-
     compile 'com.android.support:support-compat:25.4.0'
     compile 'com.daimajia.easing:library:2.0@aar'
     compile 'com.daimajia.androidanimations:library:2.3@aar'
+    implementation files('libs/yvelabs-chronometer-v2.0.jar')
 }
