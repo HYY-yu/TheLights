@@ -1,7 +1,7 @@
 # TheLights
 利用MatrixLayout实现的 关灯游戏 （开发中）
 
-()
+[!github](https://github.com/HYY-yu/TheLights/blob/master/demo.gif "show")
 
 ## MatrixLayout 介绍
 用于显示一个 n x m 大小的整数矩阵，映射到内部的ChildView的Background中。如：通过 addStatus(0,drawable) 添加矩阵的0元素映射，addStatus(1,drawable) 
