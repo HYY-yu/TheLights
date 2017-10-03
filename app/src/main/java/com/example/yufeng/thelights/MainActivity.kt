@@ -1,6 +1,7 @@
 package com.example.yufeng.thelights
 
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
@@ -9,8 +10,9 @@ import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.example.matrixlayout.BaseMatrixView
 import com.example.matrixlayout.Matrix
-import com.yvelabs.chronometer2.Chronometer
+import com.yvelabs.chronometer2.utils.FontUtils
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.ctx
 import org.jetbrains.anko.sp
 import java.util.*
 import kotlin.collections.ArrayList
@@ -19,20 +21,30 @@ class MainActivity : AppCompatActivity() {
 
     val handler = Handler()
     val viewList = ArrayList<View>()
+    var step = 0
+    lateinit var fontLobster: Typeface
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        fontLobster = FontUtils.getTypeface(
+                ctx,"fonts/segoeprb.ttf")
 
         val lightOn = getDrawable(R.drawable.bg_light_on)
         val lightOff = getDrawable(R.drawable.bg_light_off)
 
-        val matrixData = Array(10) { IntArray(10) { 0 } }
+        val matrixData = Array(8) { IntArray(8) { 0 } }
+
+        tvStepCount.typeface = fontLobster
+        tvStepCount.text = step.toString()
+        tvStepCount.setTextColor(Color.WHITE)
+        tvStepCount.textSize = sp(12).toFloat()
 
         matrixLayout.setMatrix(matrixData)
                 .setMatrixView(BaseMatrixView(matrixLayout.context))
                 .setMatrixOnClickListener { view, matrix ->
                     run {
+
                         val x = view.matrixX
                         val y = view.matrixY
 
@@ -68,32 +80,49 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         matrixLayout.refreshTransform()
+                        step++
+                        tvStepCount.text = step.toString()
                     }
                 }
                 .addStatus(0, lightOff)
                 .addStatus(1, lightOn)
                 .refresh()
 
-        btn_start.setOnClickListener { v ->
+        btnStartAuto.setOnClickListener { v ->
             //随机选择一个方块，点击
             //执行n次
             handler.postDelayed(MyRunnable(), 2000)
         }
 
-        btn_back.setOnClickListener {
+        btnBack.setOnClickListener {
             //回退
             matrixLayout.matrix().back { step, x, y, oldElem, newElem, total ->
                 val matrix = matrixLayout.matrix()
                 matrix.set(x, y, oldElem)
             }
             matrixLayout.refresh()
+            step--
+            tvStepCount.text = step.toString()
         }
 
-//        chronometer.setTypeFace(Chronometer.getTypeface_SQUID_SMALL_CAPS(this))
-//        chronometer.setTextSize(sp(14).toFloat())
-//        chronometer.setTextColor(Color.WHITE)
-        chronometer.start()
 
+
+        btnReset.setOnClickListener {
+            matrixLayout.matrix().reset()
+            matrixLayout.refresh()
+            step = 0
+            tvStepCount.text = step.toString()
+            chronometer.reset()
+        }
+
+        chronometer.setTypeFace(fontLobster)
+        chronometer.setTextSize(sp(14).toFloat())
+        chronometer.setTextColor(Color.WHITE)
+        chronometer.setTextBold(false)
+
+        btnStartGame.setOnClickListener {
+            chronometer.start()
+        }
     }
 
     private fun playViewAnim(v: View) {

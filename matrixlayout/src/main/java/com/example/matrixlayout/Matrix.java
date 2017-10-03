@@ -127,7 +127,12 @@ public class Matrix {
      */
     public void reset() {
         while (true) {
-            if (!back(null)) {
+            if (!back(new Viewer() {
+                @Override
+                public void oneStep(int step,int x,int y,int oldElem,int newElem,int total) {
+                    set(x, y, oldElem);
+                }
+            })) {
                 break;
             }
         }

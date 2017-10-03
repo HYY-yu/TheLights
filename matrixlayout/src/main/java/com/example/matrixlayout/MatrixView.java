@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 /**
- * 对MatrixView有特殊需求可继承MatrixView实现copy()方法  (注意 MatrixView必须为正方形)
+ * 对MatrixView有特殊需求可继承MatrixView实现copy()方法  (注意 MatrixView 必须为正方形)
  *
  * Created by yufeng on 17-9-27.
  */
